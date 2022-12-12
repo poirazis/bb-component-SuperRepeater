@@ -31,11 +31,11 @@
     regenerator-runtime "^0.13.11"
 
 "@budibase/backend-core@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.2.0.tgz#84eb3bfcb1039cc7aeec0e1fd9dce4b061ffe897"
-  integrity sha512-Of24pb8psDueeXiAUBncjzI+YYum0+nPCgw08dYxxNXmSSKbXP65tQaJo9+sOgsKp/2T/gjkY7rvfFTzIHt5/w==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.2.1.tgz#92c2464a17cae3c26afa40066feda21911cef660"
+  integrity sha512-EMzgxOTWebSLXq1hZr+WF2pNsjOc81XwwlWQ0mxXjv7YahWPYFsMGRZyOLWMOF4i49fuMvbmF39FdFCIa1odcg==
   dependencies:
-    "@budibase/types" "^2.2.0"
+    "@budibase/types" "^2.2.1"
     "@shopify/jest-koa-mocks" "5.0.1"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-sdk "2.1030.0"
@@ -67,10 +67,10 @@
     uuid "8.3.2"
     zlib "1.0.5"
 
-"@budibase/types@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.2.0.tgz#061baa04ca5461573b95a43632c820906907d838"
-  integrity sha512-F9LbRli/O6dYDCpU/bGCoFp1Rh29INV0wrtTGXBTDVYpouCXM+rwj9jUBh+8x+rBZ/S9z8V5auOis6RcD4dkqA==
+"@budibase/types@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.2.1.tgz#baeaaeb0fee01e3a3746eb58f3b9ecbe249094f1"
+  integrity sha512-o5FFz47yDq+Evgj22h+yvvpBk9qPUqrs53EKtVB8PwUiSjvt7vbQTotIgJd9CVslAW5274dfnOG4oB2LuG3fDg==
 
 "@crownframework/svelte-error-boundary@^1.0.3":
   version "1.0.3"

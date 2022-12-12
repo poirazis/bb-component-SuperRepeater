@@ -7,7 +7,6 @@
   export let direction
   export let align
   export let justify
-  export let reverse = false;
   export let gap
 
   //  'start' | 'center' | 'end' | 'stretch'
@@ -27,11 +26,8 @@
     evenly: 'space-evenly',
   };
 
-  $: directionWithReverse = reverse ? `${direction}-reverse` : direction;
-
   export let startIndex
   export let iterations
-  export const currentIndex = "5"
 
   let _startIndex
   let _iterations
@@ -47,7 +43,7 @@
       isFirst : index === 0,
       isLast : index === (_iterations - 1)
     }
-    console.log(dataContext)
+
     return dataContext
   }
 
@@ -60,7 +56,7 @@
   {...$$restProps}
   class={$$restProps.class}
   style:display="flex"
-  style:flex-direction={directionWithReverse}
+  style:flex-direction={direction}
   style:align-items={alignMap[align]}
   style:justify-content={justifyMap[justify]}
   style:gap={gap}
