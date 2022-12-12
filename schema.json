@@ -1,0 +1,107 @@
+{
+  "type": "component",
+  "metadata": {},
+  "schema": {
+    "name": "bb-component-SuperRepeater",
+    "friendlyName": "Super Repeater",
+    "description": "An unbound Repeater Component for Budibase",
+    "hasChildren": true,
+    "icon": "Text",
+    "styles": [ "padding", "background", "border", "shadow" ],
+    "settings": [
+      {
+        "type": "text",
+        "key": "startIndex",
+        "label": "Start Index"
+      },
+      {
+        "type": "text",
+        "key": "iterations",
+        "label": "Iterations"
+      },
+      {
+        "type": "select",
+        "key": "direction",
+        "label": "Direction",
+        "options": [
+          { "label": "Row" , "value": "row"},
+          { "label": "Column" , "value": "column"}
+        ],
+        "defaultValue": "row"
+      },
+      {
+        "type": "select",
+        "key": "justify",
+        "label": "Justify Items",
+        "options": [
+          { "label": "Flext Start" , "value": "start"},
+          { "label": "Center" , "value": "center"},
+          { "label": "Flex End" , "value": "end"},
+          { "label": "Space Around" , "value": "around"},
+          { "label": "Space Between" , "value": "between"},
+          { "label": "Space Evenly" , "value": "evenly"}
+        ],
+        "defaultValue": "start"
+      },
+      {
+        "type": "select",
+        "key": "align",
+        "label": "Align Items",
+        "options": [
+          { "label": "Flext Start" , "value": "start"},
+          { "label": "Center" , "value": "center"},
+          { "label": "Flex End" , "value": "end"},
+          { "label": "Strecth" , "value": "stretch"}
+        ],
+        "defaultValue": "stretch"
+      },
+      {
+        "type": "select",
+        "key": "gap",
+        "label": "Item Gap",
+        "options": [
+          { "label": "None" , "value": "0rem"},
+          { "label": "Tiny" , "value": "0.25rem"},
+          { "label": "Small" , "value": "0.5rem"},
+          { "label": "Medium" , "value": "1rem"},
+          { "label": "Large" , "value": "1.5rem"},
+          { "label": "Extra Large" , "value": "2rem"},
+          { "label": "Huge" , "value": "3rem"}
+        ],
+        "defaultValue": "1rem"
+      }
+    ],
+    "context": [
+      {
+        "type": "static",
+        "values": [
+          {
+            "label": "CurrentIndex",
+            "key": "currentIndex",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "type": "static",
+        "values": [
+          {
+            "label": "isFirst",
+            "key": "isFirst",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "type": "static",
+        "values": [
+          {
+            "label": "isLast",
+            "key": "isLast",
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+}
