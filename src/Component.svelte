@@ -36,6 +36,8 @@
   $: _iterations = (!isNaN(iterations)) ? Number(iterations) : 0
   $: _slots = Array(_iterations).fill(0)
   $: _valid = !isNaN(startIndex) && !isNaN(iterations)
+  $: console.log ( _startIndex )
+  $: console.log ( _valid )
 
   function getDataContext ( index ) {
     let dataContext = {
@@ -43,35 +45,41 @@
       isFirst : index === 0,
       isLast : index === (_iterations - 1)
     }
-
     return dataContext
   }
 
 </script>
 
-<div 
-  use:styleable={$component.styles}>
-  {#if _slots?.length > 0}
-  <div
-  {...$$restProps}
-  class={$$restProps.class}
-  style:display="flex"
-  style:flex-direction={direction}
-  style:align-items={alignMap[align]}
-  style:justify-content={justifyMap[justify]}
-  style:gap={gap}
-  >
-  {#key _startIndex}
-    {#each _slots as _slot, index}
-      <Provider data={getDataContext(index)}>
-          <slot />
-      </Provider>
-    {/each}
-  {/key}
-  </div>
+<div use:styleable={$component.styles}>
+
+  {#if _slots?.length > 0 && _valid}
+    <div
+    {...$$restProps}
+    class={$$restProps.class}
+    style:display="flex"
+    style:flex-direction={direction}
+    style:align-items={alignMap[align]}
+    style:justify-content={justifyMap[justify]}
+    style:gap={gap}
+    >
+    {#key _startIndex}
+      {#if $component.empty}
+        <div class="blankState">
+          <h2> Welcome to the Super Repeater Component </h2>
+          <p> Add some Components to the Super Repeater to get Started ! </p>
+          <p> Then set you Starting Index and Iterations properties. </p>
+        </div>
+      {:else}
+        {#each _slots as _slot, index}
+          <Provider data={getDataContext(index)}>
+              <slot />
+          </Provider>
+        {/each}
+      {/if}
+    {/key}
+    </div>
   {:else if (!_valid)}
-    <p> Invalid Properties </p>
-  {:else}
-    <p> You have iterations set at 0. The component will not render at runtime </p>
+    <p> Oops! Something went wrong. Seems you have set invalid (Non Numerical) Properties </p>
   {/if}
+
 </div>

@@ -6,18 +6,20 @@
     "friendlyName": "Super Repeater",
     "description": "An unbound Repeater Component for Budibase",
     "hasChildren": true,
-    "icon": "Text",
+    "icon": "Workflow",
     "styles": [ "padding", "background", "border", "shadow" ],
     "settings": [
       {
         "type": "text",
         "key": "startIndex",
-        "label": "Start Index"
+        "label": "Start Index",
+        "defaultValue" : 1
       },
       {
         "type": "text",
         "key": "iterations",
-        "label": "Iterations"
+        "label": "Iterations",
+        "defaultValue": 2
       },
       {
         "type": "select",
@@ -27,7 +29,7 @@
           { "label": "Row" , "value": "row"},
           { "label": "Column" , "value": "column"}
         ],
-        "defaultValue": "row"
+        "defaultValue": "column"
       },
       {
         "type": "select",
