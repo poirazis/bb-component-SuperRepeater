@@ -5,21 +5,56 @@
     "name": "bb-component-SuperRepeater",
     "friendlyName": "Super Repeater",
     "description": "An unbound Repeater Component for Budibase",
+    "info": "The Super Repeater allows you to create complex dynamic layouts",
     "hasChildren": true,
     "icon": "Workflow",
     "styles": [ "padding", "background", "border", "shadow" ],
     "settings": [
       {
+        "type": "select",
+        "key": "mode",
+        "label": "Repeater Mode",
+        "options": [
+          { "label": "Unbound", "value": "unbound" },
+          { "label": "Delimited String", "value": "delimited" }
+        ],
+        "defaultValue" : "unbound"
+      },
+      {
+        "type": "text",
+        "key": "source",
+        "label": "Source",
+        "dependsOn": { "setting": "mode",  "value": "delimited" }
+      },
+      {
+        "type": "text",
+        "key": "delimiter",
+        "label": "Delimiter",
+        "defaultValue": ",",
+        "dependsOn": { 
+          "setting": "mode",
+          "value": "delimited"
+        }
+      },
+      {
         "type": "text",
         "key": "startIndex",
         "label": "Start Index",
-        "defaultValue" : 1
+        "defaultValue" : 1,
+        "dependsOn": { 
+          "setting": "mode",
+          "value": "unbound"
+        }
       },
       {
         "type": "text",
         "key": "iterations",
         "label": "Iterations",
-        "defaultValue": 2
+        "defaultValue": 2,
+        "dependsOn": { 
+          "setting": "mode",
+          "value": "unbound"
+        }
       },
       {
         "type": "select",
@@ -81,6 +116,16 @@
             "label": "CurrentIndex",
             "key": "currentIndex",
             "type": "number"
+          }
+        ]
+      },
+      {
+        "type": "static",
+        "values": [
+          {
+            "label": "Value",
+            "key": "value",
+            "type": "string"
           }
         ]
       },

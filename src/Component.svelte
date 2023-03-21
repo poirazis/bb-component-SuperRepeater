@@ -8,6 +8,11 @@
   export let align
   export let justify
   export let gap
+  export let mode
+  export let source
+  export let delimiter
+  export let startIndex
+  export let iterations
 
   //  'start' | 'center' | 'end' | 'stretch'
   const alignMap = {
@@ -26,22 +31,33 @@
     evenly: 'space-evenly',
   };
 
-  export let startIndex
-  export let iterations
-
   let _startIndex
   let _iterations
+  let _slots 
 
   $: _startIndex = (!isNaN(startIndex)) ? Number(startIndex) : 0
   $: _iterations = (!isNaN(iterations)) ? Number(iterations) : 0
-  $: _slots = Array(_iterations).fill(0)
   $: _valid = !isNaN(startIndex) && !isNaN(iterations)
-  $: console.log ( _startIndex )
-  $: console.log ( _valid )
+
+  $: initialize( mode, source, delimiter )
+
+  function initialize () {
+    if ( mode != "unbound" ) {
+      try { 
+        _slots = source.split(delimiter)
+      }
+      catch ( ex ) {
+        console.log("error", ex)
+      }
+    } else {
+      _slots = Array(_iterations).fill(0)
+    }
+  }
 
   function getDataContext ( index ) {
     let dataContext = {
       currentIndex : _startIndex + index,
+      value: _slots[index],
       isFirst : index === 0,
       isLast : index === (_iterations - 1)
     }
@@ -51,7 +67,6 @@
 </script>
 
 <div use:styleable={$component.styles}>
-
   {#if _slots?.length > 0 && _valid}
     <div
     {...$$restProps}
@@ -61,8 +76,9 @@
     style:align-items={alignMap[align]}
     style:justify-content={justifyMap[justify]}
     style:gap={gap}
+    style:width="100%"
+    style:height="100%"
     >
-    {#key _startIndex}
       {#if $component.empty}
         <div class="blankState">
           <h2> Welcome to the Super Repeater Component </h2>
@@ -76,7 +92,6 @@
           </Provider>
         {/each}
       {/if}
-    {/key}
     </div>
   {:else if (!_valid)}
     <p> Oops! Something went wrong. Seems you have set invalid (Non Numerical) Properties </p>
