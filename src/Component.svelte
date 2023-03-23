@@ -42,9 +42,18 @@
   $: initialize( mode, source, delimiter )
 
   function initialize () {
-    if ( mode != "unbound" ) {
+    if (!source) return
+
+    if ( mode === "delimited" ) {
       try { 
         _slots = source.split(delimiter)
+      }
+      catch ( ex ) {
+        console.log("error", ex)
+      }
+    } else if ( mode === "object" ) {
+      try { 
+        _slots = JSON.parse(source)
       }
       catch ( ex ) {
         console.log("error", ex)

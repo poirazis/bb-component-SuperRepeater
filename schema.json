@@ -16,15 +16,15 @@
         "label": "Repeater Mode",
         "options": [
           { "label": "Unbound", "value": "unbound" },
-          { "label": "Delimited String", "value": "delimited" }
+          { "label": "Delimited String", "value": "delimited" },
+          { "label": "Array of Objects", "value": "object" }
         ],
-        "defaultValue" : "unbound"
+        "defaultValue" : "delimited"
       },
       {
         "type": "text",
         "key": "source",
-        "label": "Source",
-        "dependsOn": { "setting": "mode",  "value": "delimited" }
+        "label": "Source"
       },
       {
         "type": "text",
@@ -125,7 +125,7 @@
           {
             "label": "Value",
             "key": "value",
-            "type": "string"
+            "type": "object"
           }
         ]
       },
