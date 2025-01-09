@@ -2,8 +2,8 @@
   "type": "component",
   "metadata": {},
   "schema": {
-    "name": "bb-component-SuperContainer",
-    "friendlyName": "Super Container",
+    "name": "bb-component-SuperRepeater",
+    "friendlyName": "Super Container Repeater",
     "description": "A Multi Layout Data Aware Container Component for Budibase",
     "author": "Michael Poirazi",
     "hasChildren": true,
@@ -17,11 +17,11 @@
     "context": [
       {
         "type": "schema",
-        "scope": "global"
+        "scope": "local"
       },
       {
         "type": "static",
-        "scope": "global",
+        "scope": "local",
         "values": [
           { "key": "value", "label": "value", "type": "object" },
           { "key": "index", "label": "index", "type": "number" }
