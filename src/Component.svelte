@@ -437,8 +437,7 @@
         : Math.floor(Math.random() * 16777215).toString(16) + "10";
 
   $: nested = component
-    ? $component.ancestors[$component.ancestors.length - 2] ==
-      "plugin/bb-component-SuperContainer"
+    ? $component.path.at(-2) == "plugin/bb-component-SuperContainer"
     : false;
 
   $: slots =
@@ -636,7 +635,7 @@
             <Provider
               data={bound == "array"
                 ? { value: row, index: idx }
-                : { ...row, index: idx, value: row }}
+                : { ...row, index: idx, _row: row }}
               scope={ContextScopes.Local}
             >
               <slot />

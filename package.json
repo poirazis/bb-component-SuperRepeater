@@ -14,7 +14,8 @@
     "@crownframework/svelte-error-boundary": "^1.0.3",
     "@spectrum-css/opacitycheckerboard": "^1.1.5",
     "@spectrum-css/splitview": "4.0.3",
-    "svelte": "^4.2.19",
+    "svelte": "^4.2.20",
+    "@poirazis/supercomponents-shared": "^1.0.0",
     "svelte-fsm": "^1.2.0"
   },
   "devDependencies": {
@@ -25,7 +26,7 @@
     "@rollup/plugin-node-resolve": "^15.3.1",
     "@rollup/plugin-terser": "^0.4.4",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.3",
     "rollup": "^2.79.2",
     "rollup-plugin-copy2": "^0.3.1",
     "rollup-plugin-polyfill-node": "^0.8.0",
