@@ -607,7 +607,7 @@
         {#if mode == "grid" && inBuilder}
           <div class="underlay">
             {#each coords as _, idx}
-              <div class="placeholder" />
+              <div class="placeholder"></div>
             {/each}
           </div>
         {/if}

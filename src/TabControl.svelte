@@ -90,7 +90,7 @@
             class={container.icon}
             style:font-size={tabsIconsOnly ? "20px" : null}
             style:color={container.id == selectedTab ? container?.color : null}
-          />
+          ></i>
         {/if}
 
         {#if !tabsIconsOnly || !container.icon}
