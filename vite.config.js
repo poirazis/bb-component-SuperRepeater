@@ -56,6 +56,18 @@ const bundle = () => ({
   },
 });
 
+// Custom plugin to remove CSS file since we bundle it in JS
+const removeCss = () => ({
+  name: "remove-css",
+  apply: "build",
+  writeBundle() {
+    const cssPath = "./dist/style.css";
+    if (existsSync(cssPath)) {
+      unlinkSync(cssPath);
+    }
+  },
+});
+
 const validateSchema = () => ({
   name: "validate-schema",
   apply: "build",
@@ -102,6 +114,7 @@ export default defineConfig({
       },
       plugins: [
         clean(),
+        removeCss(),
         {
           name: "copy-and-hash-assets",
           apply: "build",
