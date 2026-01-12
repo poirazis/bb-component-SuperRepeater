@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "bb-component-SuperRepeater",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "A Multi Layout Repeater for Budibase",
   "author": "Michael Poirazi",
   "license": "MIT",
