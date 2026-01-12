@@ -243,7 +243,7 @@
           "justify-items": hAlign,
           "align-items": vAlign,
           "--grid-columns": gridColumns,
-          "--grid-rows": gridRows,
+          "--grid-rows": gridRows > 1 ? gridRows : "auto",
           "--grid-column-gap": gap + "rem",
           "--grid-row-gap": gap + "rem",
         };
@@ -607,7 +607,7 @@
         {#if mode == "grid" && inBuilder}
           <div class="underlay">
             {#each coords as _, idx}
-              <div class="placeholder" />
+              <div class="placeholder"></div>
             {/each}
           </div>
         {/if}
