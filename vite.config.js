@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import postcss from "postcss";
 import { fileURLToPath } from "url";
 import {
   readFileSync,
@@ -10,7 +11,7 @@ import {
   createWriteStream,
 } from "fs";
 import { createHash } from "crypto";
-import tar from "tar";
+import * as tar from "tar";
 import { validate } from "@budibase/backend-core/plugins";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -56,17 +57,17 @@ const bundle = () => ({
   },
 });
 
-// Custom plugin to remove CSS file since we bundle it in JS
-const removeCss = () => ({
-  name: "remove-css",
-  apply: "build",
-  writeBundle() {
-    const cssPath = "./dist/style.css";
-    if (existsSync(cssPath)) {
-      unlinkSync(cssPath);
-    }
-  },
-});
+// Custom plugin to remove CSS file since we bundle it in JS - REPLACED BY injectCss
+// const removeCss = () => ({
+//   name: "remove-css",
+//   apply: "build",
+//   writeBundle() {
+//     const cssPath = "./dist/style.css";
+//     if (existsSync(cssPath)) {
+//       unlinkSync(cssPath);
+//     }
+//   },
+// });
 
 const validateSchema = () => ({
   name: "validate-schema",
@@ -77,16 +78,50 @@ const validateSchema = () => ({
   },
 });
 
+// Custom plugin to inject CSS into the JS bundle
+const injectCss = () => ({
+  name: "inject-css",
+  apply: "build",
+  async writeBundle() {
+    const distDir = "dist";
+    const files = readdirSync(distDir);
+    const cssFile = files.find((f) => f.endsWith(".css") && !f.startsWith("."));
+    const jsFile = "plugin.min.js";
+
+    if (cssFile) {
+      const cssContent = readFileSync(`${distDir}/${cssFile}`, "utf8");
+      const jsContent = readFileSync(`${distDir}/${jsFile}`, "utf8");
+
+      // Inject CSS into JS as a style tag injection IIFE
+      const cssInjection = `
+(function() {
+  const css = ${JSON.stringify(cssContent)};
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+})();
+`;
+
+      const updatedJs = cssInjection + jsContent;
+      writeFileSync(`${distDir}/${jsFile}`, updatedJs);
+
+      // Remove the CSS file
+      unlinkSync(`${distDir}/${cssFile}`);
+    }
+  },
+});
+
 export default defineConfig({
   plugins: [
     validateSchema(),
+    postcss(),
     svelte({
       compilerOptions: {
         compatibility: {
           componentApi: 4,
         },
       },
-      emitCss: false,
+      emitCss: true,
       preprocess: [],
     }),
   ],
@@ -114,7 +149,7 @@ export default defineConfig({
       },
       plugins: [
         clean(),
-        removeCss(),
+        injectCss(),
         {
           name: "copy-and-hash-assets",
           apply: "build",
