@@ -5,8 +5,8 @@
   },
   "schema": {
     "name": "bb-component-SuperRepeater",
-    "friendlyName": "Super Container Repeater",
-    "description": "A Multi Layout Data Aware Container Component for Budibase",
+    "friendlyName": "Super Repeater",
+    "description": "A flexible repeater component for iterating over arrays and data sources with support for multiple layout modes",
     "author": "Michael Poirazi",
     "hasChildren": true,
     "showEmptyState": true,
@@ -25,62 +25,13 @@
         "type": "static",
         "scope": "local",
         "values": [
+          { "key": "key", "label": "key", "type": "string" },
           { "key": "value", "label": "value", "type": "object" },
           { "key": "index", "label": "index", "type": "number" }
-        ]
-      },
-      {
-        "type": "static",
-        "scope": "local",
-        "values": [
-          {
-            "label": "Row",
-            "key": "_row",
-            "type": "object"
-          }
         ]
       }
     ],
     "settings": [
-      {
-        "section": true,
-        "name": "Sizing",
-        "dependsOn": { "setting": "childMode", "value": "containerItem" },
-        "settings": [
-          {
-            "type": "select",
-            "label": "Flex Mode",
-            "showLabel": false,
-            "key": "flex",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Shrink",
-                "value": "shrink",
-                "barIcon": "Minimize",
-                "barTitle": "Shrink container"
-              },
-              {
-                "label": "Grow",
-                "value": "grow",
-                "barIcon": "Maximize",
-                "barTitle": "Grow container"
-              }
-            ],
-            "defaultValue": "shrink",
-            "dependsOn": { "setting": "childMode", "value": "containerItem" }
-          },
-          {
-            "type": "number",
-            "key": "flexFactor",
-            "label": "Flex Factor",
-            "min": 1,
-            "defaultValue": 1,
-            "dependsOn": { "setting": "flex", "value": "grow" }
-          }
-        ]
-      },
       {
         "type": "select",
         "key": "mode",
@@ -107,33 +58,13 @@
             "barTitle": "Tabs Control"
           },
           {
-            "label": "SplitView",
-            "value": "splitview",
-            "barIcon": "SplitView",
-            "barTitle": "Resizable Splitview"
-          },
-          {
-            "label": "Field Group",
-            "value": "fieldgroup",
-            "barIcon": "Group",
-            "barTitle": "Field Group"
+            "label": "List",
+            "value": "list",
+            "barIcon": "list-dashes",
+            "barTitle": "List View"
           }
         ],
         "defaultValue": "container"
-      },
-      {
-        "type": "select",
-        "key": "childMode",
-        "label": "Child Mode",
-        "options": [
-          { "label": "Container Item", "value": "containerItem" },
-          { "label": "SplitView Item", "value": "splitviewItem" },
-          { "label": "Tabs Item", "value": "tabsItem" },
-          { "label": "Grid Item", "value": "gridItem" },
-          { "label": "Grid Item", "value": "fieldgroupItem" }
-        ],
-        "defaultValue": "containerItem",
-        "hidden": true
       },
       {
         "type": "select",
@@ -141,73 +72,46 @@
         "label": "Repeater Mode",
         "showInBar": true,
         "barStyle": "buttons",
-        "dependsOn": {
-          "setting": "mode",
-          "value": "fieldgroup",
-          "invert": true
-        },
         "options": [
-          { "label": "Off", "value": false, "barIcon": "Cancel" },
           {
             "label": "Data Provider",
             "value": "dataprovider",
-            "barIcon": "Data"
+            "barIcon": "database"
           },
-          { "label": "Array", "value": "array", "barIcon": "FlashOn" }
+          { "label": "Array", "value": "array", "barIcon": "brackets-square" },
+          {
+            "label": "Object Keys",
+            "value": "json",
+            "barIcon": "brackets-curly"
+          }
         ],
         "defaultValue": "dataprovider"
       },
       {
-        "type": "boolean",
-        "key": "skeleton",
-        "label": "Skeleton",
-        "dependsOn": { "setting": "mode", "value": "container" },
-        "resetOn": "mode"
+        "type": "dataProvider",
+        "key": "dataprovider",
+        "label": "Data Provider",
+        "resetOn": "bound",
+        "dependsOn": { "setting": "bound", "value": "dataprovider" }
       },
       {
-        "type": "boolean",
-        "key": "collapsible",
-        "label": "Collapsible",
-        "dependsOn": { "setting": "mode", "value": "container" },
-        "resetOn": "mode"
+        "type": "text",
+        "key": "sourceArray",
+        "label": "Source Array",
+        "resetOn": "bound",
+        "dependsOn": { "setting": "bound", "value": "array" }
       },
       {
-        "section": true,
-        "name": "Repeater Settings",
-        "dependsOn": "bound",
-        "settings": [
-          {
-            "type": "dataProvider",
-            "key": "dataprovider",
-            "label": "Data Provider",
-            "resetOn": "bound",
-            "dependsOn": { "setting": "bound", "value": "dataprovider" }
-          },
-          {
-            "type": "text",
-            "key": "sourceArray",
-            "label": "Source Array",
-            "resetOn": "bound",
-            "dependsOn": { "setting": "bound", "value": "array" }
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "SplitView Options",
-        "dependsOn": { "setting": "mode", "value": "splitview" },
-        "settings": [
-          {
-            "type": "select",
-            "key": "splitViewRatio",
-            "label": "Ratio"
-          }
-        ]
+        "type": "text",
+        "key": "sourceJSON",
+        "label": "Source Object",
+        "resetOn": "bound",
+        "dependsOn": { "setting": "bound", "value": "json" }
       },
       {
         "section": true,
         "name": "Container Options",
-
+        "dependsOn": { "setting": "mode", "value": "container" },
         "settings": [
           {
             "type": "select",
@@ -365,73 +269,6 @@
       },
       {
         "section": true,
-        "name": "Collapsible Options",
-        "dependsOn": ["collapsible"],
-        "settings": [
-          {
-            "type": "boolean",
-            "key": "collapsed",
-            "label": "Collapsed"
-          },
-          {
-            "type": "text",
-            "key": "panelTitle",
-            "label": "Title"
-          },
-          {
-            "type": "text",
-            "key": "collapseTitle",
-            "label": "Collapsed Title"
-          },
-          {
-            "type": "icon",
-            "key": "collapseIcon",
-            "label": "Collapsed Icon"
-          },
-          {
-            "type": "text",
-            "key": "collapseSize",
-            "label": "Collapsed Size",
-            "defaultValue": "3rem"
-          },
-          {
-            "type": "select",
-            "label": "Collapse Side",
-            "key": "collapseSide",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Left",
-                "value": "left",
-                "barIcon": "PaddingLeft",
-                "barTitle": "Collapse Left"
-              },
-              {
-                "label": "Top",
-                "value": "top",
-                "barIcon": "PaddingTop",
-                "barTitle": "Collapse Up"
-              },
-              {
-                "label": "Right",
-                "value": "right",
-                "barIcon": "PaddingRight",
-                "barTitle": "Collapse Right"
-              },
-              {
-                "label": "Bottom",
-                "value": "bottom",
-                "barIcon": "PaddingBottom",
-                "barTitle": "Collapse Botttom"
-              }
-            ],
-            "defaultValue": "left"
-          }
-        ]
-      },
-      {
-        "section": true,
         "name": "Grid Options",
         "dependsOn": { "setting": "mode", "value": "grid" },
         "settings": [
@@ -458,46 +295,92 @@
         "settings": [
           {
             "type": "select",
-            "key": "theme",
-            "label": "Theme",
+            "key": "tabsPosition",
+            "label": "Position",
             "options": [
-              { "label": "Budibase", "value": "budibase" },
-              { "label": "Buttons", "value": "buttons" }
+              { "label": "Top", "value": "top" },
+              { "label": "Left", "value": "left" }
             ],
-            "defaultValue": "budibase"
+            "defaultValue": "top"
           },
           {
             "type": "select",
-            "key": "tabsSize",
-            "label": "Size",
+            "key": "theme",
+            "label": "Theme",
             "options": [
-              { "label": "Small", "value": "S" },
-              { "label": "Medium", "value": "M" },
-              { "label": "Large", "value": "L" }
+              { "label": "Buttons", "value": "buttons" },
+              { "label": "Wide Buttons", "value": "wideButtons" }
             ],
-            "defaultValue": "M"
+            "defaultValue": "buttons"
+          },
+          {
+            "type": "text",
+            "key": "tabText",
+            "label": "Tab Text",
+            "defaultValue": "Tab {{ index }}",
+            "nested": true
+          },
+          {
+            "type": "select",
+            "key": "buttonsAlignment",
+            "label": "Alignment",
+            "showInBar": true,
+            "barStyle": "select",
+            "options": [
+              {
+                "label": "Start",
+                "value": "flex-start",
+                "barIcon": "align-left",
+                "barTitle": "Align left"
+              },
+              {
+                "label": "Center",
+                "value": "center",
+                "barIcon": "align-center-horizontal",
+                "barTitle": "Align center"
+              },
+              {
+                "label": "End",
+                "value": "flex-end",
+                "barIcon": "align-right",
+                "barTitle": "Align right"
+              },
+              {
+                "label": "Stretch",
+                "value": "stretch",
+                "barIcon": "arrows-left-right",
+                "barTitle": "Stretch"
+              }
+            ],
+            "defaultValue": "flex-start"
           },
           {
             "type": "select",
             "key": "tabsAlignment",
             "label": "Text Align",
+            "showInBar": true,
+            "barStyle": "select",
             "options": [
-              { "label": "Left", "value": "flex-start" },
-              { "label": "Center", "value": "center" },
-              { "label": "Right", "value": "flex-end" }
+              {
+                "label": "Left",
+                "value": "flex-start",
+                "barIcon": "align-left",
+                "barTitle": "Align left"
+              },
+              {
+                "label": "Center",
+                "value": "center",
+                "barIcon": "align-center-horizontal",
+                "barTitle": "Align center"
+              },
+              {
+                "label": "Right",
+                "value": "flex-end",
+                "barIcon": "align-right",
+                "barTitle": "Align right"
+              }
             ],
-            "defaultValue": "flex-start"
-          },
-          {
-            "type": "text",
-            "key": "activeTab",
-            "label": "Active Tab"
-          },
-          {
-            "type": "boolean",
-            "key": "tabsEmphasized",
-            "label": "Emphasized",
-            "defaultValue": false
+            "defaultValue": "center"
           },
           {
             "type": "boolean",
@@ -506,121 +389,47 @@
             "defaultValue": false
           },
           {
+            "type": "text",
+            "key": "activeTab",
+            "label": "Default Tab",
+            "defaultValue": "0"
+          },
+          {
             "type": "event",
             "key": "onTabChange",
             "label": "On Tab Change",
-            "context": [
-              {
-                "key": "tabTitle",
-                "label": "Title"
-              }
-            ]
+            "context": [{ "key": "tabTitle", "label": "Title" }]
           }
         ]
       },
       {
         "section": true,
-        "name": "Field Group Options",
-        "dependsOn": { "setting": "mode", "value": "fieldgroup" },
-        "settings": [
-          {
-            "type": "select",
-            "key": "labelPos",
-            "label": "Label Position",
-            "options": [
-              { "label": "Left", "value": "left" },
-              { "label": "Above", "value": "above" }
-            ],
-            "defaultValue": "above"
-          },
-          {
-            "type": "text",
-            "key": "labelWidth",
-            "label": "Label Width",
-            "placeholder": "6rem",
-            "dependsOn": { "setting": "labelPos", "value": "left" }
-          },
-          {
-            "type": "number",
-            "key": "gridColumns",
-            "label": "Columns",
-            "min": 1,
-            "defaultValue": 3
-          },
-          {
-            "type": "boolean",
-            "key": "disabled",
-            "label": "Disabled"
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Grid Item Options",
-        "dependsOn": { "setting": "childMode", "value": "gridItem" },
-        "settings": [
-          {
-            "type": "number",
-            "key": "colSpan",
-            "label": "Column Span",
-            "min": 1,
-            "defaultValue": 1
-          },
-          {
-            "type": "number",
-            "key": "rowSpan",
-            "label": "Row Span",
-            "min": 1,
-            "defaultValue": 1
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Field Group Item Options",
-        "dependsOn": { "setting": "childMode", "value": "fieldgroupItem" },
-        "settings": [
-          {
-            "type": "number",
-            "key": "colSpan",
-            "label": "Column Span",
-            "min": 1,
-            "defaultValue": 1
-          },
-          {
-            "type": "number",
-            "key": "rowSpan",
-            "label": "Row Span",
-            "min": 1,
-            "defaultValue": 1
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Tab Item Options",
-        "dependsOn": { "setting": "childMode", "value": "tabsItem" },
+        "name": "List Options",
+        "dependsOn": { "setting": "mode", "value": "list" },
         "settings": [
           {
             "type": "text",
-            "key": "title",
-            "label": "Title",
-            "defaultValue": "New Tab"
+            "key": "list_title",
+            "label": "List Title",
+            "defaultValue": "Items"
           },
           {
             "type": "icon",
-            "key": "icon",
-            "label": "Icon"
+            "key": "list_icon",
+            "label": "List Icon",
+            "defaultValue": "ri-layout-list-line"
           },
           {
-            "type": "color",
-            "key": "color",
-            "label": "Color"
+            "type": "text",
+            "key": "activeTab",
+            "label": "Default Item",
+            "defaultValue": "0"
           },
           {
             "type": "event",
-            "key": "onShow",
-            "label": "On Show"
+            "key": "onTabChange",
+            "label": "On Item Change",
+            "context": [{ "key": "tabTitle", "label": "Title" }]
           }
         ]
       }
