@@ -232,11 +232,11 @@
 
 {#if visible}
   <div
-    class:super-container={$state == "container"}
+    class:super-repeater={$state == "container"}
     class:super-grid={$state == "grid"}
-    class:tabs={$state == "tabs"}
+    class:repeater-tabs={$state == "tabs"}
     class:list={$state == "list"}
-    class:tab-item={$state == "tabs" || $state == "list"}
+    class:repeater-tab-item={$state == "tabs" || $state == "list"}
     use:styleable={$component.styles}
   >
     {#if bound && slots.length > 0}
@@ -261,7 +261,7 @@
 
       {#if mode == "tabs" || mode == "list"}
         {#if selectedTab !== undefined && slots[selectedTab]}
-          <div class="tab-content">
+          <div class="repeater-tab-content">
             <Provider
               data={bound == "array"
                 ? { value: slots[selectedTab], index: selectedTab }
@@ -284,14 +284,16 @@
         {/if}
       {:else}
         {#each slots as row, idx (idx)}
-          <Provider
-            data={bound == "array"
-              ? { value: row, index: idx }
-              : { ...row, index: idx, _row: row }}
-            scope={ContextScopes.Local}
-          >
-            <slot />
-          </Provider>
+          <div class="repeater-item">
+            <Provider
+              data={bound == "array"
+                ? { value: row, index: idx }
+                : { ...row, index: idx, _row: row }}
+              scope={ContextScopes.Local}
+            >
+              <slot />
+            </Provider>
+          </div>
         {/each}
       {/if}
     {:else if inBuilder}
@@ -305,7 +307,7 @@
     overflow: hidden;
   }
 
-  .super-container {
+  .super-repeater {
     display: flex;
     position: relative;
     overflow: hidden;
@@ -320,7 +322,7 @@
     row-gap: var(--grid-row-gap);
   }
 
-  .tabs {
+  .repeater-tabs {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -329,11 +331,11 @@
     height: 100%;
   }
 
-  .tab-item {
+  .repeater-tab-item {
     flex: 1 1 auto;
   }
 
-  .tab-content {
+  .repeater-tab-content {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;

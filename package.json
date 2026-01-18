@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "bb-component-SuperRepeater",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Multi Layout Repeater for Budibase",
   "author": "Michael Poirazi",
   "packageManager": "bun@1.0.0",
@@ -13,20 +13,18 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
-    "@spectrum-css/opacitycheckerboard": "^1.1.5",
-    "@spectrum-css/splitview": "4.0.3",
-    "svelte": "^5.0.0",
     "@poirazis/supercomponents-shared": "latest",
     "svelte-fsm": "^1.2.0"
   },
   "devDependencies": {
     "@budibase/backend-core": "^3.24.0",
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
-    "postcss": "^8.5.6",
     "tar": "^7.5.2",
     "terser": "^5.44.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-singlefile": "^2.3.0"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
